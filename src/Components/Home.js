@@ -1,8 +1,36 @@
-import react from 'react'
-const LogoutPage = () => {
+import react, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+
+const Home = () => {
+
+  const [userData, setUserData]=useState(null);
+  const Navigate = useNavigate();
+
   const handlelogOut=()=>{
-  // localStorage.setItem('username':, JSON.stringify(score));
+
+ // Remove the user data and access token from localStorage
+ localStorage.removeItem('user');
+ localStorage.removeItem('authToken');
+ localStorage.removeItem('refreshToken');
+
+ Navigate('/');
+
   }
+
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('user');
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData)); 
+    } else {
+      Navigate('/'); 
+    }
+  }, [Navigate]);
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
+
   return (
     <div className='flexCol logoutLayout'>
       <div className=' flexCol logoutWidth'>
@@ -16,13 +44,13 @@ const LogoutPage = () => {
           </span>
           <div className='flexCol txtCntr pdng8'>
             <span className='mailTxt pdngHXXS'>
-              Michael Dam
+              {userData.firstName}
             </span>
             <span className='logoutTxt pdngHXXS'>
-              example@gmail.com
+            {userData.email}
             </span>
             <span className='logoutTxt pdngHXXS'>
-              Female
+            {userData.gender}
             </span>
             <div className='flexRow logoutBtn pdng8'>
               <button onClick={handlelogOut}>
@@ -38,4 +66,4 @@ const LogoutPage = () => {
   );
 }
 
-export default LogoutPage;
+export default Home;

@@ -208,6 +208,11 @@ input:-webkit-autofill {
     width: 30% !important;
   }
 }
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
 @media (min-width: 600px)and (max-width: 899px){
   .resColRow{flex-direction: row;}
    }
